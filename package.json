@@ -1,0 +1,16 @@
+{
+  "name": "hapakulenews",
+  "version": "1.0.0",
+  "description": "Simple app consuming news api",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fetch",
+    "html",
+    "bootstrap"
+  ],
+  "author": "Ian Okumu",
+  "license": "ISC"
+}
