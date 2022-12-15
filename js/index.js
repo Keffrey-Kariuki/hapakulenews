@@ -2,6 +2,7 @@
 const LATEST_NEWS = "https://newsapi.org/v2/everything?q=all&pageSize=20&apiKey=991a1731e00a4b5a83bb6b22ca744fcc"
 const NEWS_SOURCES = "https://newsapi.org/v2/top-headlines/sources?apiKey=991a1731e00a4b5a83bb6b22ca744fcc"
 const HEADLINES = "https://newsapi.org/v2/top-headlines?country=us&apiKey=991a1731e00a4b5a83bb6b22ca744fcc"
+const SEARCH = (q) => `https://newsapi.org/v2/everything?q=${q}&pageSize=20&apiKey=991a1731e00a4b5a83bb6b22ca744fcc`
 
 
 // Dom has loaded
@@ -137,6 +138,28 @@ document.addEventListener('DOMContentLoaded', () => {
             })
     }
 
+
+    const loadSearchResults = (query) => {
+        fetch(SEARCH(query))
+            .then((response) => response.json())
+            .then((data) => {
+                const articles = data.articles
+                const newsItems = articles.map((article) => newsItem(
+                    article.urlToImage,
+                    article.title,
+                    article.description,
+                    article.url
+                ))
+                // remove all existing search_results
+                deleteChildren('search_results')
+                // add new search_results
+                document.getElementById('search_results').append(...newsItems)
+                // change page
+                toggleMenu('search_results')
+            })
+    }
+
+
     // toggle menu
     const toggleMenu = (id) => {
 
@@ -144,11 +167,27 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('latest').setAttribute('hidden', 'true')
         document.getElementById('sources').setAttribute('hidden', 'true')
         document.getElementById('headlines').setAttribute('hidden', 'true')
+        document.getElementById('search_results').setAttribute('hidden', 'true')
 
         // show relevant item
         document.getElementById(id).removeAttribute('hidden')
 
     }
+
+    // delete all children in the element
+    const deleteChildren = (id) => {
+
+        let parent = document.getElementById(id)
+        let child = parent.lastElementChild
+
+        while (child) {
+            parent.removeChild(child)
+            child = parent.lastElementChild
+        }
+        
+
+    }
+
 
     // menu clicks
     document.getElementById('nav-main').addEventListener('click', () => {
@@ -160,6 +199,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('nav-headlines').addEventListener('click', () => {
         toggleMenu('headlines')
     })
+
+    // form submission
+    document.getElementById('search_form').addEventListener('submit', (event) => {
+        event.preventDefault()
+        const query = document.getElementById('search_input').value
+        loadSearchResults(query)
+    })
+
 
 
     // call functions

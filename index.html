@@ -21,8 +21,8 @@
                     </li>
                 </ul>
                
-                <form class="d-flex">
-                    <input type="text" class="form-control" name="search" placeholder="Search..."/>
+                <form class="d-flex" id="search_form">
+                    <input type="text" class="form-control" name="search" id="search_input" placeholder="Search..."/>
                     <button type="submit" class="btn btn-outline-warning ms-2">Search</button>
                 </form>
             </div>
@@ -34,7 +34,6 @@
             <div class="row" id="latest">
             </div>
 
-
             <!-- news sources -->
             <div class="row" id="sources" hidden>
             </div>
@@ -43,6 +42,9 @@
             <div class="row" id="headlines" hidden>
             </div>
 
+            <!-- search results -->
+            <div class="row" id="search_results" hidden>
+            </div>
 
 
         </div>
